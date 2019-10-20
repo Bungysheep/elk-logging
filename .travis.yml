@@ -11,11 +11,11 @@ env:
 services:
 - docker
 
-before_install:
+install:
 # Build images
 - docker build -t jamese/logstash:latest -t jamese/logstash:$IMG_VERS ./logstash
 
-after_success:
+script:
 # Login to docker
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # Push latest image to docker hub
