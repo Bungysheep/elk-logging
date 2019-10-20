@@ -11,9 +11,11 @@ env:
 services:
 - docker
 
-after_success:
+before_install:
 # Build images
 - docker build -t jamese/elk-logging:latest -t jamese/elk-logging:$IMG_VERS .
+
+after_success:
 # Login to docker
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # Push latest image to docker hub
