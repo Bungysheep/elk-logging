@@ -1,0 +1,22 @@
+sudo: required
+
+branches:
+  only:
+  - master
+
+env:
+  global:
+  - IMG_VERS=$(git rev-parse HEAD)
+
+services:
+- docker
+
+after_success:
+# Build images
+- docker build -t jamese/elk-logging:latest -t jamese/elk-logging:$IMG_VERS .
+# Login to docker
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+# Push latest image to docker hub
+- docker push jamese/elk-logging:latest
+# Push unique image to docker hub
+- docker push jamese/elk-logging:$IMG_VERS
