@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  logstash:
+    build:
+      context: ./logstash
+      dockerfile: Dockerfile
+    volumes:
+      - ./logs:/usr/share/logstash/logs
+    container_name: logstash
+    depends_on:
+      - elasticsearch
+  
